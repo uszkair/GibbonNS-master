@@ -1,0 +1,9 @@
+<ListView class="list-group" [items]="foundedDevices" (itemTap)="onItemTap($event)" style="height:1250px">
+    <ng-template let-foundedDevice="item">
+        <FlexboxLayout flexDirection="row" class="list-group-item">
+            <Label [text]="foundedDevice.address" class="thumb img-circle"></Label>
+            <Label [text]="foundedDevice.name" class="list-group-item-heading" verticalAlignment="center"
+                   style="width: 60%"></Label>
+        </FlexboxLayout>
+    </ng-template>
+</ListView><Label text="{{foundedDevices.length}}"></Label>

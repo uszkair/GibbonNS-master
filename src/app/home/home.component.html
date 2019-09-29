@@ -1,0 +1,43 @@
+<!--
+The template defines the view of the component - what is actually rendered.
+In NativeScript applications the template is defined with XML using NativeScript UI elements.
+It is different from HTML. So instead of <input>, <span>, <div> etc. - we have <TextField>, <Label> and layouts.
+The important thing is that although the elements are different - all of the Angular’s template syntax works exactly the same.
+So you can still use template expressions, bindings, templates as well as all the built-in directives.
+-->
+
+<!--
+The ActionBar is the NativeScript common abstraction over the Android ActionBar and iOS NavigationBar.
+http://docs.nativescript.org/ui/action-bar
+-->
+<ActionBar title="My App" class="action-bar" android:style="padding-top:20" flat="true">
+    <ActionItem ios.position="right" (tap)="logout()">
+        <StackLayout>
+            <Label text="&#xf08b;" class="fa fa-logout" android:style="padding-right:10"></Label>
+        </StackLayout>
+    </ActionItem>
+</ActionBar>
+<StackLayout horizontalAlignment="center" verticalAlignment="center">
+    <Button text="{{ 'hello' | translate }} / {{ 'goodbye' | translate }}" class="btn btn-primary"></Button>
+</StackLayout>
+<!--<GridLayout rows="*" height="1500px">-->
+    <!--<RadSideDrawer>-->
+        <!--<StackLayout tkDrawerContent backgroundColor="gray">-->
+            <!--<StackLayout height="56" style="text-align: center; vertical-align: center;">-->
+                <!--<Label text="'MAINMENU.TITLE' | translate"></Label>-->
+            <!--</StackLayout>-->
+            <!--<StackLayout>-->
+                <!--<Label text="Primary" padding="10" backgroundColor="lightgray"></Label>-->
+                <!--<Label text="Social" padding="10"></Label>-->
+                <!--<Label text="Promotions" padding="10"></Label>-->
+                <!--<Label text="Labels" padding="10" backgroundColor="lightgray"></Label>-->
+                <!--<Label text="Important" padding="10"></Label>-->
+                <!--<Label text="Starred" padding="10"></Label>-->
+                <!--<Label text="Sent Mail" padding="10"></Label>-->
+                <!--<Label text="Drafts" padding="10"></Label>-->
+            <!--</StackLayout>-->
+        <!--</StackLayout>-->
+    <!--</RadSideDrawer>-->
+<!--</GridLayout>-->
+<!--<ns-bluetooth-list></ns-bluetooth-list>-->
+

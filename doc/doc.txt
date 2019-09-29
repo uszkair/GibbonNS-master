@@ -1,0 +1,13 @@
+Main menu
+
+-   Search
+-   Sign
+-   Messages (If had matched earler, or the user paid for this service)
+-   Earlier found results list (must be?)
+-   Profile
+-   Settings
+
+
+
+
+
