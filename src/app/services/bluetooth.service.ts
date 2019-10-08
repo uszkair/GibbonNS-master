@@ -1,77 +1,89 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FoundedDevice} from "~/app/services/founded.device";
 import * as Utils from 'utils/utils';
-// import * as bluetooth from 'nativescript-bluetooth';
+import {ad} from "tns-core-modules/utils/utils";
+import {BluetoothDevice} from "~/app/bluetooth/blue-tooth-device";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/distinctUntilChanged';
+
+var dialogs = require("tns-core-modules/ui/dialogs");
+import {Bluetooth} from 'nativescript-bluetooth';
+
+const bluetooth = new Bluetooth();
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BluetoothService {
 
-  private readonly _adapter : android.bluetooth.BluetoothAdapter;
-  private readonly _manager : any;
-
-  constructor() {
-    this._manager = Utils.ad.getApplicationContext().getSystemService((<any>(android.content.Context)).BLUETOOTH_SERVICE);
-    this._adapter = this._manager.getAdapter();
-  }
-
-  public get IsEnabled() : Promise<boolean> {
-    // bluetooth.isBluetoothEnabled().then(
-    //     enabled => console.log("Enabled? " + enabled)
-    // );
-    return new Promise<boolean>((resolve, reject) => {
-      try {
-        console.log('IsEnabled: ', this._adapter.isEnabled());
-        resolve(this._adapter != null && this._adapter.isEnabled());
-      } catch (ex) {
-        reject(ex);
-      }
-    });
-  }
-
-  isEnabled(){
-    // var bluetooth = require("nativescript-bluetooth");
-    // var dialogs = require("tns-core-modules/ui/dialogs");
-    //
-    // bluetooth.isBluetoothEnabled().then(function(enabled) {
-    //   dialogs.alert({
-    //     title: "Enabled?",
-    //     message: enabled ? "Yes" : "No",
-    //     okButtonText: "OK, thanks"
-    //   });
-    // });
-  }
-
-
-
-
-
-  public get FoundedDevices() : Array<FoundedDevice> {
-
-    if (this._adapter.isEnabled()) {
-      this._adapter.enable();
+    constructor() {
     }
 
-    const devices = this._adapter.getBondedDevices().toArray();
-    const results = new Array<FoundedDevice>();
-    const length = devices.length;
 
-    for (let i = 0; i < length; i++) {
+    search() {
+        this.doIsEnabledBluetooth();
 
-      const device = <android.bluetooth.BluetoothDevice>(devices[i]);
-
-      const address = device.getAddress();
-      const name = device.getName();
-      results.push(new FoundedDevice(address, name));
     }
 
-    return results;
-  }
 
+    doIsEnabledBluetooth() {
+        setTimeout(() =>
+            bluetooth.enable().then(function (enabled) {
+                let foundedDeviceArray: BluetoothDevice[] = [];
 
+                if (enabled) {
+                    console.log("Bluetooth is enabled.");
+                    setTimeout(() =>
+                            this.doStartScanning()
+                        , 1000);
+                }
+            }), 1000);
+    }
 
+    doStartScanning() {
+        let foundedDeviceArray: BluetoothDevice[] = [];
+        bluetooth
+            .startScanning({
+                onDiscovered: function (device) {
+                    console.log("almapaprikak1", device)
+                    const blDevice = new BluetoothDevice(device.UUID, device.localName);
+                    foundedDeviceArray.push(blDevice);
+                    console.log("MACILACI", foundedDeviceArray)
+                }
+            })
+            .then(
+                function () {
+                    dialogs.alert({
+                        title: "Scanning is complete.",
+                        message: "Scanning is complete",
+                        okButtonText: "OK"
+                    });
+                    return foundedDeviceArray;
+                },
+                function (err) {
+                    console.log("ERRdOR", err);
+                    return null;
+                }
+            );
+    }
 
-
+    doStopScanning() {
+        bluetooth.stopScanning().then(
+            function () {
+                dialogs.alert({
+                    title: "Stop Scanning",
+                    message: "Scanning is stopped",
+                    okButtonText: "OK"
+                });
+            },
+            function (err) {
+                dialogs.alert({
+                    title: "Error occured!",
+                    message: err,
+                    okButtonText: "OK"
+                });
+            }
+        );
+    }
 
 }

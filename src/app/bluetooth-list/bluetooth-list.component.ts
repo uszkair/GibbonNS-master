@@ -1,5 +1,5 @@
 import {ItemEventData} from "tns-core-modules/ui/list-view"
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {BluetoothService} from "~/app/services/bluetooth.service";
 import {FoundedDevice} from "~/app/services/founded.device";
 
@@ -9,7 +9,10 @@ import {FoundedDevice} from "~/app/services/founded.device";
     moduleId: module.id,
     styleUrls: ['./bluetooth-list.component.css']
 })
-export class BluetoothListComponent implements OnInit {
+export class BluetoothListComponent implements OnInit ,AfterViewInit{
+    ngAfterViewInit(): void {
+        this.searchDevice();
+    }
 
     foundedDevices: Array<FoundedDevice>;
 
@@ -19,20 +22,12 @@ export class BluetoothListComponent implements OnInit {
 
 
     ngOnInit() {
-        this.searchDevice();
+
     }
 
 
     searchDevice() {
-        if (this.blService.IsEnabled) {
-
-        }
-        this.foundedDevices = [{
-            address: '1002', name: 'Robi'
-        },
-        {
-            address: '1003', name: 'Sanyi'
-        }]//;this.blService.FoundedDevices;
+       this.blService.search();
     }
 
     onItemTap(args: ItemEventData): void {

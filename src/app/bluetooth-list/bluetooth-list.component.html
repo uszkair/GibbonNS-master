@@ -1,9 +1,27 @@
-<ListView class="list-group" [items]="foundedDevices" (itemTap)="onItemTap($event)" style="height:1250px">
-    <ng-template let-foundedDevice="item">
-        <FlexboxLayout flexDirection="row" class="list-group-item">
-            <Label [text]="foundedDevice.address" class="thumb img-circle"></Label>
-            <Label [text]="foundedDevice.name" class="list-group-item-heading" verticalAlignment="center"
-                   style="width: 60%"></Label>
-        </FlexboxLayout>
-    </ng-template>
-</ListView><Label text="{{foundedDevices.length}}"></Label>
+<!--<ListView class="list-group" [items]="foundedDevices" (itemTap)="onItemTap($event)" style="height:1250px">-->
+    <!--<ng-template let-foundedDevice="item">-->
+        <!--<FlexboxLayout flexDirection="row" class="list-group-item">-->
+            <!--<Label [text]="foundedDevice.address" class="thumb img-circle"></Label>-->
+            <!--<Label [text]="foundedDevice.name" class="list-group-item-heading" verticalAlignment="center"-->
+                   <!--style="width: 60%"></Label>-->
+        <!--</FlexboxLayout>-->
+    <!--</ng-template>-->
+<!--</ListView>-->
+
+<StackLayout>
+    <GridLayout rows="*">
+        <ListView items="{{ foundedDevices }}" itemTap="onPeripheralTap" separatorColor="#90c3d4">
+            <ng-template>
+                <StackLayout orientation="horizontal" class="padded-label">
+                    <StackLayout class="padded-label-stack">
+                        <Label horizontalAlignment="right" width="30" text="{{ RSSI }}" class="rssi-label"></Label>
+                    </StackLayout>
+                    <StackLayout class="padded-label-stack">
+                        <Label text="{{ name }}" class="title-label" textWrap="true"></Label>
+                        <Label text="{{ UUID }}" class="uuid-label" textWrap="true"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </ng-template>
+        </ListView>
+    </GridLayout>
+</StackLayout>

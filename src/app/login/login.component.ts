@@ -21,8 +21,8 @@ declare var android: any;
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('password') passwordField: ElementRef;
-  @ViewChild('email') emailField: ElementRef;
+  @ViewChild('password', {static: false}) passwordField: ElementRef;
+  @ViewChild('email', {static: false}) emailField: ElementRef;
 
   user: User;
   isAuthenticating = false;
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
     if (!hasErrorMsg)
       return false;
 
-    const isValidEmail = true; //this.user.hasEmail() && this.utilityService.isValidEmail(this.user.email);
+    const isValidEmail = this.user.hasEmail() && this.utilityService.isValidEmail(this.user.email);
     let hasError = hasErrorMsg || !isValidEmail;
 
     if (isValidEmail) {

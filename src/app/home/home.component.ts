@@ -36,13 +36,5 @@ export class HomeComponent implements OnInit {
         return this.utilityService.isTablet();
     }
 
-    mainContentText: string = "Hello Világ";
 
-    onOpenDrawerTap() {
-        console.log("onOpenDrawerTap")
-    }
-
-    onCloseDrawerTap() {
-        console.log("onCloseDrawerTap")
-    }
 }

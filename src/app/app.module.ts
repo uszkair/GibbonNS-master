@@ -24,6 +24,8 @@ import {
 import {HttpClient} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {NativeScriptHttpClientModule} from "nativescript-angular/http-client";
+import {NativeScriptRouterModule} from "nativescript-angular";
+import {SideComponent} from "~/app/side/side.component";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -38,6 +40,7 @@ export function createTranslateLoader(http: HttpClient) {
         NativeScriptHttpClientModule,
         NativeScriptModule,
         NativeScriptFormsModule,
+        NativeScriptRouterModule,
         AppRoutingModule,
         TranslateModule.forRoot({
             loader: {
@@ -49,12 +52,16 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     declarations: [
         AppComponent,
+        SideComponent,
         BluetoothComponent,
         BluetoothListComponent,
         LoginComponent,
         HomeComponent,
     ],
     exports: [
+        NativeScriptRouterModule,
+        NativeScriptModule,
+        SideComponent,
         BluetoothComponent,
         BluetoothListComponent
     ],
